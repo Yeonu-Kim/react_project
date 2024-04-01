@@ -21,10 +21,22 @@ const App = () => {
       date: "03/04/24"
     },
   ]);
+
+  const addNote = (text) => {
+    const date = new Date();
+    const newNote = {
+      id: nanoid(),
+      text: text,
+      date: date.toLocaleDateString()
+    }
+
+    setNotes([...notes, newNote]);
+  }
+
   return (
     <div className={stlyes.app}>
       Hello World!
-      <NoteList notes={notes} />
+      <NoteList notes={notes} handleSave={addNote}/>
     </div>
   );
 }
