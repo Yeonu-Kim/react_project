@@ -1,8 +1,9 @@
-import NoteList from './components/NoteList'
+import NoteList from './components/NoteList';
+import stlyes from './App.module.css';
 
 const App = () => {
   return (
-    <div className="App">
+    <div className={stlyes.app}>
       Hello World!
       <NoteList />
     </div>
