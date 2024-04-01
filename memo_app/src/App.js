@@ -33,10 +33,14 @@ const App = () => {
     setNotes([...notes, newNote]);
   }
 
+  const deleteNote = (id) => {
+    setNotes(notes.filter((note) => note.id !== id));
+  }
+
   return (
     <div className={stlyes.app}>
       Hello World!
-      <NoteList notes={notes} handleSave={addNote}/>
+      <NoteList notes={notes} handleSave={addNote} handleDelete={deleteNote}/>
     </div>
   );
 }
