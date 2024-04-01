@@ -1,12 +1,12 @@
 import { MdDeleteForever } from 'react-icons/md';
 import styles from "./Note.module.css";
 
-const Note = () => {
+const Note = ({ id, text, date }) => {
     return (
         <div className={styles.note}>
-            <span>Hi</span>
+            <span>{ text }</span>
             <div className={styles.note_footer}>
-                <small>010424</small>
+                <small>{ date }</small>
                 <MdDeleteForever className={styles.delete_icon} size="1.3em"/>
             </div>
         </div>
