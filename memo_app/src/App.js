@@ -2,6 +2,7 @@ import { useState } from "react";
 import { nanoid } from 'nanoid';
 import NoteList from './components/NoteList';
 import stlyes from './App.module.css';
+import Search from './components/Search';
 
 const App = () => {
   const [notes, setNotes] = useState([
@@ -22,6 +23,8 @@ const App = () => {
     },
   ]);
 
+  const [searchText, setSearchText] = useState('');
+
   const addNote = (text) => {
     const date = new Date();
     const newNote = {
@@ -37,10 +40,15 @@ const App = () => {
     setNotes(notes.filter((note) => note.id !== id));
   }
 
+  const visibleNotes = notes.filter((note) => {
+    return note.text.toLowerCase().includes(searchText);
+  })
+
   return (
     <div className={stlyes.app}>
       Hello World!
-      <NoteList notes={notes} handleSave={addNote} handleDelete={deleteNote}/>
+      <Search handleSearchNote={setSearchText}/>
+      <NoteList notes={visibleNotes} handleSave={addNote} handleDelete={deleteNote}/>
     </div>
   );
 }
