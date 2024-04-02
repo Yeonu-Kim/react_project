@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { nanoid } from 'nanoid';
+import './index.css';
 import NoteList from './components/NoteList';
 import stlyes from './App.module.css';
 import Search from './components/Search';
+import Header from './components/Header';
 
 const App = () => {
   const [notes, setNotes] = useState([
@@ -24,6 +26,7 @@ const App = () => {
   ]);
 
   const [searchText, setSearchText] = useState('');
+  const [isDark, setIsDark] = useState(false);
 
   const addNote = (text) => {
     const date = new Date();
@@ -45,11 +48,11 @@ const App = () => {
   })
 
   return (
-    <div className={stlyes.app}>
-      Hello World!
-      <Search handleSearchNote={setSearchText}/>
-      <NoteList notes={visibleNotes} handleSave={addNote} handleDelete={deleteNote}/>
-    </div>
+      <div className={`${stlyes.app} ${isDark && stlyes.dark_mode}`}>
+        <Header handleMode={setIsDark}/>
+        <Search handleSearchNote={setSearchText}/>
+        <NoteList notes={visibleNotes} handleSave={addNote} handleDelete={deleteNote}/>
+      </div>
   );
 }
 

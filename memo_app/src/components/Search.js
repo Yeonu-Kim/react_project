@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MdSearch } from 'react-icons/md';
 import style from './Search.module.css';
 

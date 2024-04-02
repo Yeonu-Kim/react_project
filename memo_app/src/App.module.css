@@ -2,4 +2,13 @@
     max-width: 960px;
     margin: 0 auto;
     padding: 0 1.5rem;
+    min-height: 100vh;
+}
+
+.dark_mode {
+    background-color: black;
+}
+
+.dark_mode h1 {
+    color: white;
 }
