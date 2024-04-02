@@ -1,26 +1,26 @@
 .note {
-    background-color: #fef68a;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-    border-radius: 1rem;
-    padding: 2rem;
-    min-height: 15rem;
-    white-space: pre-wrap;
+  background-color: #fef68a;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  border-radius: 1rem;
+  padding: 2rem;
+  min-height: 15rem;
+  white-space: pre-wrap;
 }
 
 .note_footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
 
-.delete_icon{
-    cursor: pointer;
+.delete_icon {
+  cursor: pointer;
 }
 
 .delete_icon:hover {
-    color: red;
+  color: red;
 }

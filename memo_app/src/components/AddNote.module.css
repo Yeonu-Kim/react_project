@@ -1,25 +1,25 @@
 .new_note {
-    background-color: #67d7cc;
+  background-color: #67d7cc;
 }
 
 .new_note > textarea {
-    border: none;
-    resize: none;
-    background-color: transparent;
+  border: none;
+  resize: none;
+  background-color: transparent;
 }
 
 .new_note > textarea:focus {
-    outline: none;
+  outline: none;
 }
 
 .save {
-    background-color: #e1e1e1;
-    border: none;
-    border-radius: 15px;
-    padding: 5px 10px;
+  background-color: #e1e1e1;
+  border: none;
+  border-radius: 15px;
+  padding: 5px 10px;
 }
 
 .save:hover {
-    background-color: #ededed;
-    cursor: pointer;
+  background-color: #ededed;
+  cursor: pointer;
 }
