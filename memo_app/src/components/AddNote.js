@@ -4,14 +4,13 @@ import noteStyle from "./Note.module.css";
 
 const AddNote = ({ handleSave }) => {
   const [noteText, setNoteText] = useState("");
-  const [count, setCount] = useState(200);
+  const maximum_char = 200;
 
   const handleChange = (event) => {
     const content = event.target.value;
 
-    if (content.length <= 200) {
+    if (content.length <= maximum_char) {
       setNoteText(content);
-      setCount(200 - content.length);
     }
   };
 
@@ -32,7 +31,7 @@ const AddNote = ({ handleSave }) => {
         placeholder="Type to add a note..."
       />
       <div className={noteStyle.note_footer}>
-        <small>{count} Remaining</small>
+        <small>{maximum_char - noteText.length} Remaining</small>
         <button className={style.save} onClick={handleSaveClick}>
           Save
         </button>
