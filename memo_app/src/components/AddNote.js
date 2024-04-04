@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addNote } from "../reducers/notesStore";
 import style from "./AddNote.module.css";
 import noteStyle from "./Note.module.css";
 
-const AddNote = ({ handleSave }) => {
+const AddNote = () => {
   const [noteText, setNoteText] = useState("");
   const maximum_char = 200;
+  const dispatch = useDispatch();
+  const notes = useSelector((state) => state.notes.value);
 
   const handleChange = (event) => {
     const content = event.target.value;
@@ -16,13 +20,13 @@ const AddNote = ({ handleSave }) => {
 
   const handleSaveClick = () => {
     if (noteText.trim().length > 0) {
-      handleSave(noteText);
+      dispatch(addNote(noteText));
       setNoteText("");
     }
   };
 
   return (
-    <div className={`${noteStyle.note} ${style.new_note} `}>
+    <div className={`${noteStyle.note} ${style.new_note}`}>
       <textarea
         onChange={handleChange}
         value={noteText}

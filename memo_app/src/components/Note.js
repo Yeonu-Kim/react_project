@@ -1,10 +1,14 @@
 import { MdDeleteForever } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { deleteNote } from "../reducers/notesStore";
 import styles from "./Note.module.css";
 
-const Note = ({ id, text, date, handleDelete }) => {
+const Note = ({ id, text, date }) => {
+  const dispatch = useDispatch();
+
   const handleDeleteClick = (event) => {
     event.preventDefault();
-    handleDelete(id);
+    dispatch(deleteNote(id));
   };
 
   return (

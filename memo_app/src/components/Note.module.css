@@ -7,7 +7,7 @@
   border-radius: 1rem;
   padding: 2rem;
   min-height: 15rem;
-  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .note_footer {

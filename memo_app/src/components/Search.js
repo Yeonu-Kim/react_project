@@ -1,10 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { updateText } from "../reducers/searchTextStore";
 import { MdSearch } from "react-icons/md";
 import style from "./Search.module.css";
 
-const Search = ({ handleSearchNote }) => {
+const Search = () => {
+  const dispatch = useDispatch();
   const handleTextChange = (event) => {
-    handleSearchNote(event.target.value);
+    dispatch(updateText(event.target.value));
   };
 
   return (

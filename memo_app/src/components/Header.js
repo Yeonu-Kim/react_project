@@ -1,11 +1,16 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleDark } from "../reducers/darkStore";
 import style from "./Header.module.css";
 import addNoteStyle from "./AddNote.module.css";
 
-const Header = ({ handleMode }) => {
+const Header = () => {
+  const dispatch = useDispatch();
+
   const handleToggleBtn = () => {
-    handleMode((current) => !current);
+    dispatch(toggleDark());
   };
+
   return (
     <div className={style.header}>
       <h1>Notes</h1>
