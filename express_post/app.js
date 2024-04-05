@@ -16,6 +16,12 @@ app.get("/write", (req, res) => {
   res.render("write", { title: "테스트 게시판" });
 });
 
+app.get("/detail/:id", async (req, res) => {
+  res.render("detail", {
+    title: "테스트 게시판",
+  });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
