@@ -28,8 +28,9 @@ app.get("/", async (req, res) => {
   const search = req.query.search || "";
 
   try {
-    const result = await postService.postList(page, search);
-    res.render("home", { title: "테스트 게시판" });
+    const [posts, paginator] = await postService.postList(page, search);
+
+    res.render("home", { title: "테스트 게시판", search, paginator, posts });
   } catch (error) {
     console.log(error);
     res.render("home", { title: "테스트 게시판" });

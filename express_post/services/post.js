@@ -1,5 +1,5 @@
 const { Post } = require("../models/Post");
-const paginator = require("../utils/paginator");
+const createPaginator = require("../utils/paginator");
 
 const writePost = async (data) => {
   const post = Post(data);
@@ -13,18 +13,19 @@ const writePost = async (data) => {
 
 const postList = async (page, search) => {
   const perPage = 10;
-  // /: 시작 및 종료 기호, search: 패턴 (찾는 대상이 되는 문자열), i: 플래그 (대소문자를 구별하지 않음.)
+  // /: start and end point, search: target of string, i: flag (Do not discriminate lowercase and uppercase)
   const query = { title: new RegExp(search, "i") };
-  const cursor = Post.findOne(query, {
-    limit: perPage,
-    skip: (page - 1) * perPage,
-  }).sort({ createdDate: -1 });
+  const cursor = Post.find(query)
+    .limit(perPage)
+    .skip((page - 1) * perPage)
+    .sort({ createdDate: -1 }); // result: mongodb query
 
-  const totalCount = await Post.count(query);
-  const posts = await cursor.toArray();
+  const totalCount = await Post.find().count(query);
+  const posts = await cursor.lean().exec();
+  // Mongo DB is BSON, so we have to change BSON to JS object using lean function.
+  // If we want to get promise from query, we have to use exec function
 
-  const newPaginator = paginator({ totalCount, page, perPage: perPage });
-
+  const newPaginator = createPaginator({ totalCount, page, perPage: perPage });
   return [posts, newPaginator];
 };
 

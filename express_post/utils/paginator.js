@@ -2,7 +2,7 @@ const lodash = require("lodash");
 // Number of lodash
 const PAGE_LIST_SIZE = 10;
 
-const Paginator = ({ totalCount, page, perPage = 10 }) => {
+const createPaginator = ({ totalCount, page, perPage = 10 }) => {
   const PER_PAGE = perPage;
   const totalPage = Math.ceil(totalCount / PER_PAGE);
 
@@ -36,3 +36,5 @@ const Paginator = ({ totalCount, page, perPage = 10 }) => {
 
   return paginator;
 };
+
+module.exports = createPaginator;

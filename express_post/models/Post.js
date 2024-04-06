@@ -5,7 +5,7 @@ const PostSchema = mongoose.Schema({
     type: String,
     maxlength: 127,
   },
-  name: {
+  writer: {
     type: String,
     maxlength: 63,
   },

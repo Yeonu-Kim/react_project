@@ -24,24 +24,38 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><a href="/detail">타이틀</a></td>
-        <td>작성자이름</td>
-        <td>99999</td>
-        <td>2024.04.05</td>
-      </tr>
+      {{#each posts}}
+        <tr>
+          <td><a href="/detail/{{_id}}">{{title}}</a></td>
+          <td>{{writer}}</td>
+          <td>{{hits}}</td>
+          <td>{{dateString createdDate}}</td>
+        </tr>
+      {{/each}}
     </tbody>
   </table>
 </div>
 
 <div>
-  <a>처음</a>
-  <a>이전</a>
-  <a>1</a>
-  <a>2</a>
-  <a>3</a>
-  <a>4</a>
-  <a>5</a>
-  <a>다음</a>
-  <a>끝</a>
+  {{#with paginator}}
+    <a href="/?page=1&search={{@root.search}}">처음</a>
+    {{#if hasPrev}}
+      <a href="/?page={{prevPage}}&search={{@root.search}}">이전</a>
+    {{else}}
+      <a>이전</a>
+    {{/if}}
+    {{#each pageList}}
+      {{#if (eq this @root.paginator.page)}}
+        <a>{{this}}</a>
+      {{else}}
+        <a href="/?page={{this}}&search={{@root.search}}">{{this}}</a>
+      {{/if}}
+    {{/each}}
+    {{#if hasNext}}
+      <a href="/?page={{nextPage}}&search={{@root.search}}">다음</a>
+    {{else}}
+      <a>다음</a>
+    {{/if}}
+    <a href="/?page={{lastPage}}&search={{@root.search}}">끝</a>
+  {{/with}}
 </div>
