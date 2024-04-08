@@ -9,6 +9,7 @@ const AddTodoForm = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     dispatch(addTodo(value));
+    setValue("");
   };
 
   return (
