@@ -1,4 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+const getTodosAsync = createAsyncThunk("todos/getTodosAsync", async () => {
+  const url = "http://localhost:7000/api/todos";
+  const response = await fetch(url);
+
+  if (response.ok) {
+    const todos = await response.json();
+    return todos;
+  }
+});
 
 const todoSlice = createSlice({
   name: "todos",
@@ -21,12 +31,18 @@ const todoSlice = createSlice({
       return state.filter((todo) => todo.id !== action.payload);
     },
     toggleComplete: (state, action) => {
-      const todoId = state.findIndex((todo) => todo.id === action.payload);
-      state[todoId].completed = !state[todoId].completed;
+      const todo = state.find((todo) => todo.id === action.payload);
+      todo.completed = !todo.completed;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getTodosAsync.fulfilled, (state, action) => {
+      return action.payload;
+    });
   },
 });
 
 export const { addTodo, deleteTodo, toggleComplete } = todoSlice.actions;
+export { getTodosAsync };
 
 export default todoSlice.reducer;

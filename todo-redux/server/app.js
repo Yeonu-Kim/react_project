@@ -49,15 +49,15 @@ app.get("/api", (req, res) => {
   res.json({ text: "Hello World!" });
 });
 
-app.get("/todos", (req, res) => res.send(todos));
+app.get("/api/todos", (req, res) => res.send(todosDummy));
 
-app.post("/todos", (req, res) => {
+app.post("/api/todos", (req, res) => {
   const todo = { title: req.body.title, id: nanoid(), completed: false };
   todos.push(todo);
   return res.send(todo);
 });
 
-app.patch("/todos/:id", (req, res) => {
+app.patch("/api/todos/:id", (req, res) => {
   const id = req.params.id;
   const index = todos.findIndex((todo) => todo.id == id);
   const completed = Boolean(req.body.completed);
@@ -67,7 +67,7 @@ app.patch("/todos/:id", (req, res) => {
   return res.send(todos[index]);
 });
 
-app.delete("/todos/:id", (req, res) => {
+app.delete("/api/todos/:id", (req, res) => {
   const id = req.params.id;
   const index = todos.findIndex((todo) => todo.id == id);
   if (index > -1) {
