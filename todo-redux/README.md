@@ -1,17 +1,13 @@
 # TODO-REDUX
 
-### Running server
+### Initial setting
 
 ```
-cd server
-npm install
-npm start
+./initial.sh
 ```
 
 ### Running client
 
 ```
-cd client
-npm install
-npm start
+./run.sh
 ```
