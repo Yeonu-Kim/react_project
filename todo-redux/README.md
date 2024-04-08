@@ -6,7 +6,7 @@
 ./initial.sh
 ```
 
-### Running client
+### Running server and client
 
 ```
 ./run.sh
