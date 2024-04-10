@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const { Post } = require("../models/Post");
 const createPaginator = require("../utils/paginator");
 
@@ -7,7 +8,6 @@ const writePost = async (data) => {
   post.createdDate = new Date().toISOString();
 
   const result = await post.save();
-  console.log(result);
   return result;
 };
 
@@ -29,7 +29,68 @@ const postList = async (page, search) => {
   return [posts, newPaginator];
 };
 
+const projectionOption = {
+  projection: {
+    password: 0,
+    "comments.password": 0,
+  },
+};
+
+const getDetailPost = async (postID) => {
+  return Post.findOneAndUpdate(
+    { _id: postID },
+    { $inc: { hits: 1 } },
+    projectionOption
+  ).lean();
+};
+
+const getPostByIdAndPassword = async (id, password) => {
+  const target = await Post.findOne(
+    { _id: id, password: password },
+    projectionOption
+  )
+    .lean()
+    .exec();
+  return target;
+};
+
+const getPostById = async (id) => {
+  return Post.findOne({ _id: id }, projectionOption).lean().exec();
+};
+
+const updatePost = async (id, post) => {
+  const { title, content, createdDate } = post;
+  const updateCtx = {
+    $set: {
+      title: title,
+      content: content,
+      createdDate: createdDate,
+    },
+  };
+  return Post.updateOne({ _id: id }, updateCtx);
+};
+
+const deletePost = async (id, password) => {
+  try {
+    const target = await Post.deleteOne(
+      { _id: id, password: password },
+      projectionOption
+    );
+
+    if (target.deletedCount > 0) {
+      return { ok: true };
+    }
+  } catch {
+    return { ok: false };
+  }
+};
+
 module.exports = {
   writePost,
   postList,
+  getDetailPost,
+  getPostByIdAndPassword,
+  getPostById,
+  updatePost,
+  deletePost,
 };

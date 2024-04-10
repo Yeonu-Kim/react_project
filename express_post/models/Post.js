@@ -11,8 +11,6 @@ const PostSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    minlength: 5,
-    maxlength: 18,
   },
   content: {
     type: String,
