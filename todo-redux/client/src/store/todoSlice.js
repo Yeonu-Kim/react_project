@@ -41,7 +41,24 @@ const toggleCompleteAsync = createAsyncThunk(
     });
 
     const todo = await response.json();
-    return { id: todo.id, completed: todo.completed };
+    return todo.id;
+  }
+);
+
+const deleteTodoAsync = createAsyncThunk(
+  "todos/deleteTodoAsync",
+  async (payload) => {
+    const url = rootUrl + `/todos/${payload}`;
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    console.log(data.id);
+    return data.id;
   }
 );
 
@@ -82,13 +99,18 @@ const todoSlice = createSlice({
         state.push(action.payload);
       })
       .addCase(toggleCompleteAsync.fulfilled, (state, action) => {
-        const targetTodo = state.find((todo) => todo.id === action.payload.id);
+        const targetTodo = state.find((todo) => todo.id === action.payload);
         targetTodo.completed = !targetTodo.completed;
+      })
+      .addCase(deleteTodoAsync.fulfilled, (state, action) => {
+        console.log(action.payload);
+        console.log(state.filter((todo) => todo.id !== action.payload));
+        return state.filter((todo) => todo.id !== action.payload);
       });
   },
 });
 
 export const { addTodo, deleteTodo, toggleComplete } = todoSlice.actions;
-export { getTodosAsync, addTodoAsync, toggleCompleteAsync };
+export { getTodosAsync, addTodoAsync, toggleCompleteAsync, deleteTodoAsync };
 
 export default todoSlice.reducer;

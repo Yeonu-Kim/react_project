@@ -68,12 +68,8 @@ app.patch("/api/todos/:id", (req, res) => {
 
 app.delete("/api/todos/:id", (req, res) => {
   const id = req.params.id;
-  const index = todos.findIndex((todo) => todo.id == id);
-  if (index > -1) {
-    todos.splice(index, 1);
-  }
-
-  res.send(todos);
+  todos = todos.filter((todo) => todo.id !== id);
+  res.send({ id: id });
 });
 
 // Check server listen
