@@ -59,12 +59,11 @@ app.post("/api/todos", (req, res) => {
 
 app.patch("/api/todos/:id", (req, res) => {
   const id = req.params.id;
-  const index = todos.findIndex((todo) => todo.id == id);
-  const completed = Boolean(req.body.completed);
-  if (index > -1) {
-    todos[index].completed = completed;
+  const targetTodo = todos.find((todo) => todo.id == id);
+  if (targetTodo) {
+    targetTodo.completed = !targetTodo.completed;
   }
-  return res.send(todos[index]);
+  return res.send(targetTodo);
 });
 
 app.delete("/api/todos/:id", (req, res) => {

@@ -29,6 +29,22 @@ const addTodoAsync = createAsyncThunk("todos/addTodoAsync", async (payload) => {
   }
 });
 
+const toggleCompleteAsync = createAsyncThunk(
+  "todos/completedTodoAsync",
+  async (payload) => {
+    const url = rootUrl + `/todos/${payload}`;
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const todo = await response.json();
+    return { id: todo.id, completed: todo.completed };
+  }
+);
+
 const todoSlice = createSlice({
   name: "todos",
   initialState: [
@@ -64,11 +80,15 @@ const todoSlice = createSlice({
       })
       .addCase(addTodoAsync.fulfilled, (state, action) => {
         state.push(action.payload);
+      })
+      .addCase(toggleCompleteAsync.fulfilled, (state, action) => {
+        const targetTodo = state.find((todo) => todo.id === action.payload.id);
+        targetTodo.completed = !targetTodo.completed;
       });
   },
 });
 
 export const { addTodo, deleteTodo, toggleComplete } = todoSlice.actions;
-export { getTodosAsync, addTodoAsync };
+export { getTodosAsync, addTodoAsync, toggleCompleteAsync };
 
 export default todoSlice.reducer;
