@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 const port = 7000;
 
-let todosDummy = [
+let todos = [
   {
     id: nanoid(),
     title: "todo 1",
@@ -49,7 +49,7 @@ app.get("/api", (req, res) => {
   res.json({ text: "Hello World!" });
 });
 
-app.get("/api/todos", (req, res) => res.send(todosDummy));
+app.get("/api/todos", (req, res) => res.send(todos));
 
 app.post("/api/todos", (req, res) => {
   const todo = { title: req.body.title, id: nanoid(), completed: false };

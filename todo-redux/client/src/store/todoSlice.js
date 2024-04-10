@@ -1,12 +1,31 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const rootUrl = "http://localhost:7000/api";
+
 const getTodosAsync = createAsyncThunk("todos/getTodosAsync", async () => {
-  const url = "http://localhost:7000/api/todos";
+  const url = rootUrl + "/todos";
   const response = await fetch(url);
 
   if (response.ok) {
     const todos = await response.json();
     return todos;
+  }
+});
+
+const addTodoAsync = createAsyncThunk("todos/addTodoAsync", async (payload) => {
+  const url = rootUrl + "/todos";
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ title: payload }),
+  });
+
+  if (response.ok) {
+    const newTodo = await response.json();
+    console.log(newTodo);
+    return newTodo;
   }
 });
 
@@ -36,13 +55,20 @@ const todoSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getTodosAsync.fulfilled, (state, action) => {
-      return action.payload;
-    });
+    builder
+      .addCase(getTodosAsync.fulfilled, (state, action) => {
+        return action.payload;
+      })
+      .addCase(getTodosAsync.pending, (state, action) => {
+        return [];
+      })
+      .addCase(addTodoAsync.fulfilled, (state, action) => {
+        state.push(action.payload);
+      });
   },
 });
 
 export const { addTodo, deleteTodo, toggleComplete } = todoSlice.actions;
-export { getTodosAsync };
+export { getTodosAsync, addTodoAsync };
 
 export default todoSlice.reducer;
