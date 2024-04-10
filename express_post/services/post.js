@@ -85,6 +85,77 @@ const deletePost = async (id, password) => {
   }
 };
 
+const addComment = async (postId, data) => {
+  const { name, password, comment } = data;
+  console.log(name);
+  console.log(password);
+  console.log(comment);
+  const targetPost = await getPostById(postId);
+
+  if (targetPost.comments) {
+    const newComments = [
+      ...targetPost.comments,
+      {
+        id: Date.now(),
+        name: name,
+        password: password,
+        comment: comment,
+        createdDate: new Date().toISOString(),
+      },
+    ];
+    console.log(targetPost);
+    const result = await Post.findOneAndUpdate(
+      { _id: postId },
+      {
+        $set: {
+          comments: newComments,
+        },
+      }
+    );
+  } else {
+    const result = await Post.findOneAndUpdate(
+      { _id: postId },
+      {
+        $set: {
+          comments: {
+            id: Date.now(),
+            name: name,
+            password: password,
+            comment: comment,
+            createdDate: new Date().toISOString(),
+          },
+        },
+      }
+    );
+  }
+};
+
+const deleteComment = async (postId, commentId, password) => {
+  const targetPost = await getPostById(postId);
+  const targetComment = targetPost.comments.filter(
+    (comment) =>
+      comment.id === Number(commentId) && comment.password === password
+  );
+
+  if (targetComment) {
+    const newComments = targetPost.comments.filter(
+      (comment) => comment.id !== Number(commentId)
+    );
+    const result = await Post.findOneAndUpdate(
+      { _id: postId },
+      {
+        $set: {
+          comments: newComments,
+        },
+      }
+    );
+
+    return { ok: true };
+  } else {
+    return { ok: false };
+  }
+};
+
 module.exports = {
   writePost,
   postList,
@@ -93,4 +164,6 @@ module.exports = {
   getPostById,
   updatePost,
   deletePost,
+  addComment,
+  deleteComment,
 };

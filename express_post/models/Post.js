@@ -22,6 +22,25 @@ const PostSchema = mongoose.Schema({
   createdDate: {
     type: String,
   },
+  comments: [
+    {
+      id: {
+        type: Number,
+      },
+      name: {
+        type: String,
+      },
+      password: {
+        type: String,
+      },
+      comment: {
+        type: String,
+      },
+      createdDate: {
+        type: String,
+      },
+    },
+  ],
 });
 
 const Post = mongoose.model("Post", PostSchema);

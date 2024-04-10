@@ -1,44 +1,43 @@
 <h1>{{title}}</h1>
-{{#with post}}
-  <h2>{{title}}</h2>
+<h2>{{post.title}}</h2>
+<div>
+  작성자:
+  <b>{{post.writer}}</b>
+</div>
+<div>
+  <p>조회수: {{post.hits}} 작성일자: {{dateString post.createdDate}}</p>
+  <button onClick="modifyPost('{{post._id}}')">수정</button>
+  <button onClick="deletePost('{{post._id}}')">삭제</button>
+</div>
+<div>
+  <p>{{post.content}}</p>
+</div>
+<section>
   <div>
-    작성자:
-    <b>{{writer}}</b>
+    <h3>{{lengthOfList post.comments}}개의 댓글이 있습니다.</h3>
   </div>
-  <div>
-    <p>조회수: {{hits}} 작성일자: {{dateString createdDate}}</p>
-    <button onClick="modifyPost('{{_id}}')">수정</button>
-    <button onClick="deletePost('{{_id}}')">삭제</button>
-  </div>
-  <div>
-    <p>{{content}}</p>
-  </div>
-  <section>
+  <form method="post" action="/comment/{{post._id}}">
     <div>
-      <h3>3개의 댓글이 있습니다.</h3>
-    </div>
-    <form>
-      <div>
-        <input type="text" name="name" placeholder="이름" />
-        <input type="password" name="password" placeholder="비밀번호" />
-      </div>
-      <div>
-        <textarea name="comment" placeholder="댓글을 입력해주세요."></textarea>
-        <button>댓글쓰기</button>
-      </div>
-    </form>
-  </section>
-  <section>
-    <div>
-      <p>작성자: <b>댓글 작성자</b></p>
-      <p>작성일시: 2022.04.05 00:00:00</p>
-      <button onClick="deleteComment('1')">삭제</button>
+      <input type="hidden" id="postId" value="{{post._id}}" />
+      <input type="text" name="name" placeholder="이름" />
+      <input type="password" name="password" placeholder="비밀번호" />
     </div>
     <div>
-      <p>{{comment}}</p>
+      <textarea name="comment" placeholder="댓글을 입력해주세요."></textarea>
+      <button>댓글쓰기</button>
     </div>
-  </section>
-{{/with}}
+  </form>
+</section>
+<section>
+  {{#each post.comments}}
+    <div>
+      <p>작성자: <b>{{this.name}}</b></p>
+      <p>작성일시: {{dateString this.createdDate}}</p>
+      <p>{{this.comment}}</p>
+      <button onClick="deleteComment('{{this.id}}')">삭제</button>
+    </div>
+  {{/each}}
+</section>
 <footer>
   <div>
     <a href="/">목록으로</a>

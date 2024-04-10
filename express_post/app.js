@@ -105,6 +105,27 @@ app.delete("/delete/:id", async (req, res) => {
   }
 });
 
+app.post("/comment/:id", async (req, res) => {
+  const postId = req.params.id;
+  const newComment = await postService.addComment(postId, req.body);
+
+  return res.redirect(`/detail/${postId}`);
+});
+
+app.delete("/comment/:postId/:commentId", async (req, res) => {
+  const postId = req.params.postId;
+  const commentId = req.params.commentId;
+  const { password } = req.body;
+
+  const result = await postService.deleteComment(postId, commentId, password);
+
+  if (result.ok) {
+    return res.json({ isSuccess: true });
+  } else {
+    return res.json({ isSuccess: false });
+  }
+});
+
 // Check the express connection
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
