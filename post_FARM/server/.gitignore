@@ -178,4 +178,4 @@ pyrightconfig.json
 #alembic
 migrations
 alembic.ini
-aql_app.db
+sql_app.db
