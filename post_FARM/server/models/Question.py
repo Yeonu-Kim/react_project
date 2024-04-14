@@ -9,6 +9,9 @@ class Question(Base):
     subject = Column(String, nullable=False)
     content  = Column(Text, nullable=False)
     create_date = Column(DateTime, nullable=False)
+    user_id = Column(Integer, ForeignKey("user.id"), nullable=True)
+    
+    user = relationship("User", backref="question_users")
 
 class Answer(Base):
     __tablename__ = "answer"
@@ -17,5 +20,7 @@ class Answer(Base):
     content  = Column(Text, nullable=False)
     create_date = Column(DateTime, nullable=False)
     question_id = Column(Integer, ForeignKey("question.id"))
-
+    user_id = Column(Integer, ForeignKey("user.id"), nullable=True)
+    
+    user = relationship("User", backref="answer_users")
     question = relationship("Question", backref="answers")

@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 
 from models.Question import Question, Answer
+from models.User import User
 from schema.Answer import AnswerCreate
 from schema.Question import QuestionCreate
 
@@ -17,12 +18,12 @@ def get_question(db: Session, question_id: int):
     question = db.query(Question).get(question_id)
     return question
 
-def create_answer(db: Session, question: Question, answer_create: AnswerCreate):
-    new_answer = Answer(question = question, content= answer_create.content, create_date=datetime.now())
+def create_answer(db: Session, question: Question, answer_create: AnswerCreate, user: User):
+    new_answer = Answer(question = question, content= answer_create.content, create_date=datetime.now(), user=user)
     db.add(new_answer)
     db.commit()
 
-def create_question(db: Session, question_create: QuestionCreate):
-    new_question = Question(subject=question_create.subject, content=question_create.content, create_date=datetime.now())
+def create_question(db: Session, question_create: QuestionCreate, user: User):
+    new_question = Question(subject=question_create.subject, content=question_create.content, create_date=datetime.now(), user=user)
     db.add(new_question)
     db.commit()

@@ -1,6 +1,7 @@
 import datetime
 from pydantic import BaseModel, field_validator
 from .Answer import Answer
+from .User import User
 
 class Question(BaseModel):
     id: int
@@ -8,6 +9,7 @@ class Question(BaseModel):
     content: str
     create_date: datetime.datetime
     answers: list[Answer] = []
+    user: User | None
 
 class QuestionCreate(BaseModel):
     subject: str
