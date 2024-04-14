@@ -179,3 +179,6 @@ pyrightconfig.json
 migrations
 alembic.ini
 sql_app.db
+
+# secret
+secret.py

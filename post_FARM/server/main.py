@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes.question import router as question_router
 from routes.answer import router as answer_router
+from routes.user import router as user_router
 
 app = FastAPI()
 
@@ -19,6 +20,7 @@ app.add_middleware(
 
 app.include_router(question_router)
 app.include_router(answer_router)
+app.include_router(user_router)
 
 @app.get('/hello')
 async def hello():
