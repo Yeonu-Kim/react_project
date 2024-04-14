@@ -1,3 +1,4 @@
+import datetime
 from pydantic import BaseModel, field_validator
 
 class AnswerCreate(BaseModel):
@@ -9,4 +10,9 @@ class AnswerCreate(BaseModel):
             raise ValueError('빈 값은 허용되지 않습니다.')
         
         return v
+    
+class Answer(BaseModel):
+    id: int
+    content: str
+    create_date: datetime.datetime
     
