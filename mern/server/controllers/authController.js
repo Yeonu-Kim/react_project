@@ -1,5 +1,6 @@
-const User = require("../models/User");
 const bcrypt = require('bcrypt');
+const User = require("../models/User");
+const errorUtil = require("../utils/error");
 
 const saltRounds = 10;
 
@@ -23,6 +24,23 @@ module.exports = {
         }
     },
     loginUser: async (req, res, next) => {
+        try {
+            const user = await User.findOne({username: req.body.username});
+            if (!user) {
+                return next(errorUtil.createError(404, "User not found"))
+            }
 
+            const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
+            if (!isPasswordCorrect) {
+                return next(errorUtil.createError(400, "Wrong password or username"))
+            }
+
+            const { password, isAdmin, ...otherDetails} = user.toObject();
+
+            res.status(200).json({...otherDetails});
+        }
+        catch (err) {
+            next(err);
+        }
     }
 }
