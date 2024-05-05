@@ -12,17 +12,26 @@ const port = 7000;
 // Env Setting
 dotoenv.config();
 
-// Routes
-app.get("/", (req, res) => {
-    res.json("Hello World!");
-});
-
 // Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomsRoute);
 
+app.use((err, req, res, next) => {
+    const errorStatus = err.status || 500;
+    const errorMessage = err.message || "Undefined Server Error";
+
+    console.log(err);
+    return res.status(errorStatus).json({
+        success: false,
+        message: errorMessage,
+        stack: err.stack
+    });
+})
 // Check the mongoDB connection
 const connectDB = async () => { 
     mongoose
