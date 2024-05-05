@@ -1,11 +1,13 @@
 const express = require("express");
 const dotoenv = require("dotenv");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+
 const authRoute = require("./routes/auth");
 const usersRoute = require("./routes/users");
 const hotelsRoute = require("./routes/hotels");
 const roomsRoute = require("./routes/rooms");
-const cookieParser = require("cookie-parser");
 
 const app = express();
 const port = 7000;
@@ -17,6 +19,10 @@ dotoenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors({
+    origin: "http://localhost:3000",
+    credential: true
+}))
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
