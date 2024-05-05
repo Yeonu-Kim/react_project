@@ -9,7 +9,7 @@ router.post("/:hotelID", tokenUtil.verifyAdmin, roomsController.createRoom);
 // UPDATE
 router.patch("/:id", tokenUtil.verifyAdmin, roomsController.updateRoom);
 // DELETE
-router.delete("/:id", tokenUtil.verifyAdmin, roomsController.deleteRoom);
+router.delete("/hotelID/:id", tokenUtil.verifyAdmin, roomsController.deleteRoom);
 // GET
 router.get("/:id", roomsController.getRoom);
 // GET ALL

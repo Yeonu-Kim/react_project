@@ -26,9 +26,13 @@ module.exports = {
         }
     },
     deleteRoom: async (req, res, next) => {
+        const hotelID = req.params.hotelID
         try {
             const roomID = req.params.id;
             await Room.findByIdAndDelete(roomID);
+            await Hotel.findByIdAndUpdate(hotelID, {
+                $pull: {rooms: req.params.id}
+            }, {new: true})
             res.status(200).json({success: true});
         }
         catch(err) {
