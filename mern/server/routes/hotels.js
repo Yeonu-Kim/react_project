@@ -1,14 +1,15 @@
 const express = require("express");
 const hotelsController = require("../controllers/hotelsController");
+const tokenUtil = require("../utils/verifyToken");
 
 const router = express.Router();
 
 // CREATE
-router.post("/", hotelsController.createHotel);
+router.post("/", tokenUtil.verifyAdmin, hotelsController.createHotel);
 // UPDATE
-router.patch("/:id", hotelsController.updateHotel);
+router.patch("/:id", tokenUtil.verifyAdmin, hotelsController.updateHotel);
 // DELETE
-router.delete("/:id", hotelsController.deleteHotel);
+router.delete("/:id", tokenUtil.verifyAdmin, hotelsController.deleteHotel);
 // GET
 router.get("/:id", hotelsController.getHotel);
 // GET ALL
